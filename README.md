@@ -42,17 +42,10 @@ n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, see
 #' @param ntrial the total number of trials to be simulated.
 
 # Example
-We apply the NOC and fNOC designs to the sonidegib trial.
-* Based on the accumulated data, two DLTs were observed at dose level 3 when patient 13 arrived on day 130. At this moment, patients 6, 8, 9, 11, and 12 were still under the follow-up of evaluation without experiencing any DLT, which led to a total of five missing toxicity outcomes. We utilize the following code to decide the dose level for patient 13.
+We consider use the TITE-keyboard design as an illustration. 
+* The following code can reproduce Table 1 given in the paper with a target toxicity rate of 30%. 
 ```rscript
-target <- 0.33
-ndose <- 5
-enter.time <- c(4,7,19,29,31,50,58,67,78,91,100,118)
-dlt.time <- c(0,0,0,0,0,0,65,0,0,29,0,0)
-dose.level <- c(1,1,1,2,2,2,3,3,3,3,3,3)
-tau <- 90
-current.time <- 130
-get.next.fnoc(target, enter.time, dlt.time, current.time,tau, dose.level, ndose)
+get.boundary.tite(target=0.3,ncohort=4,cohortsize=3, design=1) 
 ```
 The output is given by 
 ```rscript
