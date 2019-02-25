@@ -90,47 +90,47 @@ $boundary_tab
 37 12        5, 6           < 8               No             No                 Yes                    
 38 12        > 6            < 6               No             No                 Yes & Eliminate   
 ```
-* On the other hand, if we had treated these missing data as no DLTs, we can utilize the ```get.next.noc``` function to generate the next dose level, as given by
+* Suppose the target toxicity rate is 30%, assessment window is 3 months, and patients are enrolled at the rate of 2 patients per month. A maximum of 36 patients will be recruited in cohorts of 3. Suppose 6 dose levels are considered and the true toxicity rates are (0.13, 0.28, 0.41, 0.50, 0.60, 0.70). The time-to-toxicity ourcomes are simulated from Weibull distributions by controlling that 50% of the toxicity events occur in the latter half of the assessment window and the patient accrual time is uniformly distributed. We can use the following code to reproduce the simulation results in Table 2 (scenario 1). 
 ```rscript 
-target <- 0.33
-ndose <- 5
-dlt <- c(0,0,0,0,0,0,1,0,0,1,0,0)
-dose.level <- c(1,1,1,2,2,2,3,3,3,3,3,3)
-get.next.noc(target, dlt, dose.level, ndose)
+target <- 0.3
+p.true <- c(0.13,0.28,0.41,0.50,0.60,0.70)
+get.oc.tite(target,p.true,ncohort=12,cohortsize=3,accrual=2,dist1=2,dist2=1,alpha=0.5,ntrial=5000,maxt=3)
 
 -----------------------output------------------------
-The feasibility bound for overdose control rule is 0.35 
-The dose-switching cutoff is 0.6 
-The dose-elimination cutoff is 0.85 
-The posterior model probabilities are 0.01 0.08 0.49 0.28 0.14 
-The posterior probability that the current dose level is overly toxic is 0.3341323 
-The next dose level is 3 
-      Patient No. Dose level DLT
- [1,]           1          1   0
- [2,]           2          1   0
- [3,]           3          1   0
- [4,]           4          2   0
- [5,]           5          2   0
- [6,]           6          2   0
- [7,]           7          3   1
- [8,]           8          3   0
- [9,]           9          3   0
-[10,]          10          3   1
-[11,]          11          3   0
-[12,]          12          3   0
-```
-* In the end, three dose levels had been explored with four DLTs out of 18 patients at dose level 2 and four DLTs out of 9 patients at dose level 3 being observed. The MTD can be estimated by the ```select.mtd.noc``` function. 
-```rscript 
-target <- 0.33
-ndose <- 5
-dlt <- c(0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,1,1,1,0,1,0,0,0,1,0)
-dose.level <- c(1,1,1,2,2,2,3,3,3,3,3,3,2,2,2,2,2,2,3,3,3,2,2,2,2,2,2,2,2,2)
-select.mtd.noc(target, dlt, dose.level, ndose)
+$selpercent
+[1] 14.10 57.94 23.14  4.36  0.24  0.00
 
------------------------output------------------------
-The posterior model probabilities are 0.03 0.55 0.36 0.05 0.01 
-The MTD is the dose level 2 
+$npatients
+[1] 12.1332 15.0288  6.8430  1.6698  0.2496  0.0138
+
+$ntox
+[1] 1.5696 4.2028 2.8062 0.8258 0.1536 0.0104
+
+$totaltox
+[1] 9.5684
+
+$totaln
+[1] 35.9382
+
+$percentstop
+[1] 0.22
+
+$duration
+[1] 25.275
+
+$sdduration
+[1] 3.03867
+
+$simu.setup
+  target p.true ncohort cohortsize startdose p.saf p.tox cutoff.eli extrasafe offset ntrial dose
+1    0.3   0.13      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    1
+2    0.3   0.28      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    2
+3    0.3   0.41      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    3
+4    0.3   0.50      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    4
+5    0.3   0.60      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    5
+6    0.3   0.70      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    6
 ```
+
 # Authors and Reference
 * Ruitao Lin and Ying Yuan
 * Lin, R. and Yuan, Y. (2019) “Time-to-event model-assisted designs for dose-finding trials with delayed toxicity”, Biostatistics, in press.
