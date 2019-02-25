@@ -33,13 +33,24 @@ n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, see
 * ```startdose```: The starting dose level for the trial, e.g., ```startdose<-1```.
 * ```p.saf```: The lower bound of the proper dosing interval, e.g., ```p.saf=target-0.05```.
 * ```p.tox```: The upper bound of the proper dosing interval, e.g., ```p.saf=target-0.05```.
-#' @param cutoff.eli the cutoff to eliminate an overly toxic dose for safety.
-#'                  We recommend the default value of (\code{cutoff.eli=0.95}) for general use.
-#' @param extrasafe set \code{extrasafe=TRUE} to impose a more stringent stopping rule
-#' @param offset a small positive number (between 0 and 0.5) to control how strict the
-#'               stopping rule is when \code{extrasafe=TRUE}. A larger value leads to a more
-#'               strict stopping rule. The default value \code{offset=0.05} generally works well.
-#' @param ntrial the total number of trials to be simulated.
+* ```cutoff.eli```: The cutoff to eliminate an overly toxic dose for safety. We recommend the default value of (```cutoff.eli=0.95```) for general use.
+* ```extrasafe```: Set ```extrasafe=TRUE``` to impose a more stringent stopping rule
+* ```offset```: A small positive number (between 0 and 0.5) to control how strict the stopping rule is when ```extrasafe=TRUE```. A larger value leads to a more strict stopping rule. The default value ```offset=0.05``` generally works well.
+* ```ntrial```: The total number of trials to be simulated.
+* ```print```: To print out the boundary results.
+* ```design```: the design indicator: ```design=1``` means the TITE-keyboard design, ```desing=2``` means the TITE-mTPI design. 
+
+# Outputs
+* ```get.boundary.tite()```: A decision table that includes optimal dose escalation and deescalation boundaries
+* ```get.oc.tite()```: Return the operating characteristics of the time-to-event model-assisted design as a data frame,
+including: (1) selection percentage at each dose level (```selpercent```),
+           (2) the number of patients treated at each dose level (```nptsdose```),
+           (3) the number of toxicities observed at each dose level (```ntoxdose```),
+           (4) the average number of toxicities (```totaltox```),
+           (5) the average number of patients (```totaln```),
+           (6) the percentage of early stopping without selecting the MTD (```pctearlystop```).   
+           (7) the average number of suspending times (```npend```)
+           (8) the average trial duration needed for the trial based on the design (```duration```)
 
 # Example
 We consider use the TITE-keyboard design as an illustration. 
