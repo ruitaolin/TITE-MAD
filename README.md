@@ -6,21 +6,17 @@ Two useful strategies to speed up drug development are to increase the patient a
 
 # Functions
 The repository includes two functions:
-* get.boundary.R: The R code that includes the function ```get.next.noc``` to select the next dose level for the new patients by the NOC design.
+* get.boundary.tite.R: The R code that includes the function ```get.boundary.tite()``` to select the next dose level for the new patients by the NOC design.
 ```rscript
-get.next.noc(target, dlt, dose.level, ndose, epi, a, eta, lambda)
+get.boundary.tite(target, ncohort, cohortsize, n.earlystop, prior.p, p.saf, p.tox, cutoff.eli, extrasafe, offset, print, output, design)
 ```
-* fNOCnext.R: The R code that includes the function ```get.next.fnoc``` to select the next dose level for the new patents by the fNOC design when the toxicity outcome is late-onset.
+* get.oc.tite.R: The R code that includes the function ```get.oc.tite()``` to obtain the operating characteristics of the time-to-event model-assisted design for single agent trials with late-onset toxicities by simulating trials.
 ```rscipt
-get.next.fnoc(target, enter.time, dlt.time, current.time, tau, dose.level, ndose, epi, a, eta, lambda)
-```
-* NOCmtd.R: The R code that includes the function ```select.mtd.noc``` to estimate the MTD level at the end of the trial.
-```rscript
-select.mtd.noc(target, dlt, dose.level, ndose, epi, lambda)
+get.oc.tite(target, p.true, ncohort, cohortsize, maxt, prior.p, accrual, maxpen, dist1, dist2, alpha, n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, seed, design)
 ```
 
 
-#Inputs
+# Inputs
 * ```target```: The target toxicity probability, e.g., ```target<-0.33```.
 * ```dlt```: A vector of length *n* that stores the toxicity outcome for each patient, where *n* is the total number of patients so far.
 * ```dose.level```: A vector of length *n* that stores the dose level assigned to each patient.
