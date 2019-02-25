@@ -5,8 +5,8 @@ R codes to implement time-to-event keyboard (TITE-Keyboard) and time-to-event mT
 Two useful strategies to speed up drug development are to increase the patient accrual rate and use novel adaptive designs. Unfortunately, these two strategies often conflict when the evaluation of the outcome cannot keep pace with the patient accrual rate and thus the interim data cannot be observed in time to make adaptive decisions. A similar logistic difficulty arises when the outcome is late onset. Based on a novel formulation and approximation of the likelihood of the observed data, the time-to-event model-assisted designs can handle toxicity data that are pending due to fast accrual or late-onset toxicity, and facilitate seamless decision making in phase I dose-finding trials. The time-to-event model-assisted designs consider each dose separately and the dose escalation/de-escalation rules can be tabulated before the trial begins, which greatly simplifies trial conduct in practice compared to that under existing methods.
 
 # Functions
-The repository includes three functions:
-* NOCnext.R: The R code that includes the function ```get.next.noc``` to select the next dose level for the new patients by the NOC design.
+The repository includes two functions:
+* get.boundary.R: The R code that includes the function ```get.next.noc``` to select the next dose level for the new patients by the NOC design.
 ```rscript
 get.next.noc(target, dlt, dose.level, ndose, epi, a, eta, lambda)
 ```
