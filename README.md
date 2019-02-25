@@ -8,8 +8,8 @@ Two useful strategies to speed up drug development are to increase the patient a
 The repository includes two functions:
 * get.boundary.tite.R: The R code that includes the function ```get.boundary.tite()``` to select the next dose level for the new patients by the NOC design.
 ```rscript
-get.boundary.tite(target, ncohort, cohortsize, n.earlystop, prior.p, p.saf, p.tox, cutoff.eli, extrasafe, 
-offset, print, output, design)
+get.boundary.tite(target, ncohort, cohortsize, n.earlystop, prior.p, p.saf, p.tox, cutoff.eli, 
+extrasafe, offset, print, output, design)
 ```
 * get.oc.tite.R: The R code that includes the function ```get.oc.tite()``` to obtain the operating characteristics of the time-to-event model-assisted design for single agent trials with late-onset toxicities by simulating trials.
 ```rscipt
@@ -19,18 +19,38 @@ n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, see
 
 
 # Inputs
-* ```target```: The target toxicity probability, e.g., ```target<-0.33```.
-* ```dlt```: A vector of length *n* that stores the toxicity outcome for each patient, where *n* is the total number of patients so far.
-* ```dose.level```: A vector of length *n* that stores the dose level assigned to each patient.
-* ```ndose```: Number of prespecified dose levels of the new drug.
-* ```epi```: A small positive value that defines the neighbourhood of the target toxicity probability.
-* ```a```: The feasibility bound for overdose control, as default, ```a<-0.35```. 
-* ```eta```: The dose-switching cutoff, as default, ```eta<-0.60```.
-* ```lambda```: The dose-elimination cutoff, as default, ```lambda<-0.85```.
-* ```enter.time```: A vector of length *n* that stores the day of arrival of each patient under late-onset cases.
-* ```dlt.time```: A vector of length *n* that stores the time-to-toxicity outcome of each patient; If the subject has not experienced the DLT by the decision-making time, his time-to-toxcity outcome is *0*.
-* ```current.time```: The arrival time of the new patient, or the decision-making time to decide the next dose level.
-* ```tau```: The length of follow-up period.
+#' @param target the target toxicity rate
+#' @param p.true a vector containing the true toxicity probabilities of the
+#'              investigational dose levels.
+#' @param ncohort the total number of cohorts
+#' @param cohortsize the cohort size
+#' @param maxt the maximum follow-up time 
+#' @param prior.p a vector of length 3, which specifies the prior probability that the time to toxicity lies
+#'              inside the time interval (0,\code{maxt}/3), (\code{maxt}/3,\code{2maxt}/3), (\code{2maxt}/3,1).
+#'              The default value is \code{prior.p=c(1/3,1/3,1/3)}. 
+#' @param accrual the accrual rate, i.e., the number of patients accrued in 1 unit of time
+#' @param dist1 the underlying distribution of the time to toxicity outcomes; \code{dist1=1} is the
+#'              uniform distribution, \code{dist1=2} corresponds to the Weibull distribution,
+#'              \code{dist1=3} is the log-logistic distribution.
+#' @param dist2 the underlying distribution of patient arrival time; \code{dist2=1} is the 
+#'              uniform distribution, \code{dist2=2} is the exponential distribution
+#' @param alpha a number from (0,1) that controls alpha*100% events in (0, 1/2T). 
+#'              The default is \code{alpha=0.5}.             
+#' @param n.earlystop the early stopping parameter. If the number of patients
+#'                    treated at the current dose reaches \code{n.earlystop},
+#'                    stop the trial and select the MTD based on the observed data.
+#'                    The default value \code{n.earlystop=100} essentially turns
+#'                    off this type of early stopping.
+#' @param startdose the starting dose level for the trial
+#' @param p.saf the lower bound of the proper dosing interval, e.g., \code{p.saf=target-0.05}
+#' @param p.tox the upper bound of the proper dosing interval, e.g., \code{p.saf=target-0.05}
+#' @param cutoff.eli the cutoff to eliminate an overly toxic dose for safety.
+#'                  We recommend the default value of (\code{cutoff.eli=0.95}) for general use.
+#' @param extrasafe set \code{extrasafe=TRUE} to impose a more stringent stopping rule
+#' @param offset a small positive number (between 0 and 0.5) to control how strict the
+#'               stopping rule is when \code{extrasafe=TRUE}. A larger value leads to a more
+#'               strict stopping rule. The default value \code{offset=0.05} generally works well.
+#' @param ntrial the total number of trials to be simulated.
 
 
 #Example
