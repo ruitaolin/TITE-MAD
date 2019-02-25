@@ -8,14 +8,13 @@ Two useful strategies to speed up drug development are to increase the patient a
 The repository includes two functions:
 * get.boundary.tite.R: The R code that includes the function ```get.boundary.tite()``` to select the next dose level for the new patients by the NOC design.
 ```rscript
-get.boundary.tite(target, ncohort, cohortsize, n.earlystop, prior.p, 
-p.saf, p.tox, cutoff.eli, extrasafe, offset, print, output, design)
+get.boundary.tite(target, ncohort, cohortsize, n.earlystop, prior.p, p.saf, p.tox, cutoff.eli, extrasafe, 
+offset, print, output, design)
 ```
 * get.oc.tite.R: The R code that includes the function ```get.oc.tite()``` to obtain the operating characteristics of the time-to-event model-assisted design for single agent trials with late-onset toxicities by simulating trials.
 ```rscipt
-get.oc.tite(target, p.true, ncohort, cohortsize, maxt, prior.p, accrual,
-maxpen, dist1, dist2, alpha, n.earlystop, startdose, p.saf, p.tox, cutoff.eli, 
-extrasafe, offset, ntrial, seed, design)
+get.oc.tite(target, p.true, ncohort, cohortsize, maxt, prior.p, accrual, maxpen, dist1, dist2, alpha, 
+n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, seed, design)
 ```
 
 
