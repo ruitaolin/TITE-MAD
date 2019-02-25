@@ -36,6 +36,7 @@ n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, see
 * ```cutoff.eli```: The cutoff to eliminate an overly toxic dose for safety. We recommend the default value of (```cutoff.eli=0.95```) for general use.
 * ```extrasafe```: Set ```extrasafe=TRUE``` to impose a more stringent stopping rule
 * ```offset```: A small positive number (between 0 and 0.5) to control how strict the stopping rule is when ```extrasafe=TRUE```. A larger value leads to a more strict stopping rule. The default value ```offset=0.05``` generally works well.
+* ```seed```: The seed for random number generation. 
 * ```ntrial```: The total number of trials to be simulated.
 * ```print```: To print out the boundary results.
 * ```design```: the design indicator: ```design=1``` means the TITE-keyboard design, ```desing=2``` means the TITE-mTPI design. 
@@ -132,14 +133,6 @@ $duration
 $sdduration
 [1] 3.03867
 
-$simu.setup
-  target p.true ncohort cohortsize startdose p.saf p.tox cutoff.eli extrasafe offset ntrial dose
-1    0.3   0.13      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    1
-2    0.3   0.28      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    2
-3    0.3   0.41      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    3
-4    0.3   0.50      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    4
-5    0.3   0.60      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    5
-6    0.3   0.70      12          3         1  0.25  0.35       0.95     FALSE   0.05   5000    6
 ```
 
 # Authors and Reference
