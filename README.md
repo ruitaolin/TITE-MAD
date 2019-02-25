@@ -23,25 +23,16 @@ n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, see
 * ```p.true```: A vector containing the true toxicity probabilities of the investigational dose levels.
 * ```ncohort```: The total number of cohorts.
 * ```cohortsize```: The cohort size.
-* ```maxt```: The maximum follow-up time. 
-*```prior.p```: A vector of length 3, which specifies the prior probability that the time to toxicity lies inside the time interval ```(0,maxt/3)```, ```(maxt/3,2maxt/3)```, ```(2maxt/3,1)```. The default value is ```prior.p=c(1/3,1/3,1/3)```. 
-
-#' @param accrual the accrual rate, i.e., the number of patients accrued in 1 unit of time
-#' @param dist1 the underlying distribution of the time to toxicity outcomes; \code{dist1=1} is the
-#'              uniform distribution, \code{dist1=2} corresponds to the Weibull distribution,
-#'              \code{dist1=3} is the log-logistic distribution.
-#' @param dist2 the underlying distribution of patient arrival time; \code{dist2=1} is the 
-#'              uniform distribution, \code{dist2=2} is the exponential distribution
-#' @param alpha a number from (0,1) that controls alpha*100% events in (0, 1/2T). 
-#'              The default is \code{alpha=0.5}.             
-#' @param n.earlystop the early stopping parameter. If the number of patients
-#'                    treated at the current dose reaches \code{n.earlystop},
-#'                    stop the trial and select the MTD based on the observed data.
-#'                    The default value \code{n.earlystop=100} essentially turns
-#'                    off this type of early stopping.
-#' @param startdose the starting dose level for the trial
-#' @param p.saf the lower bound of the proper dosing interval, e.g., \code{p.saf=target-0.05}
-#' @param p.tox the upper bound of the proper dosing interval, e.g., \code{p.saf=target-0.05}
+* ```maxt```: The maximum follow-up time.
+* ```prior.p```: A vector of length 3, which specifies the prior probability that the time to toxicity lies inside the time interval ```(0,maxt/3)```, ```(maxt/3,2maxt/3)```, ```(2maxt/3,1)```. The default value is ```prior.p=c(1/3,1/3,1/3)```. 
+* ```accrual```: The accrual rate, i.e., the number of patients accrued in 1 unit of time.
+* ```dist1```: The underlying distribution of the time to toxicity outcomes; ```dist1=1``` is the uniform distribution, ```dist1=2``` corresponds to the Weibull distribution, ```dist1=3``` is the log-logistic distribution.
+* ```dist2```: The underlying distribution of patient arrival time; ```dist2=1``` is the uniform distribution, ```dist2=2``` is the exponential distribution
+* ```alpha``` A number from (0,1) that controls ```alpha*100%``` events in ```(0, maxt/2)```. The default is ```alpha=0.5```.             
+* ```n.earlystop```: The early stopping parameter. If the number of patients treated at the current dose reaches ```n.earlystop```, stop the trial and select the MTD based on the observed data. The default value ```n.earlystop=100``` essentially turns off this type of early stopping.
+* ```startdose```: The starting dose level for the trial, e.g., ```startdose<-1```.
+* ```p.saf```: The lower bound of the proper dosing interval, e.g., ```p.saf=target-0.05```.
+* ```p.tox```: The upper bound of the proper dosing interval, e.g., ```p.saf=target-0.05```.
 #' @param cutoff.eli the cutoff to eliminate an overly toxic dose for safety.
 #'                  We recommend the default value of (\code{cutoff.eli=0.95}) for general use.
 #' @param extrasafe set \code{extrasafe=TRUE} to impose a more stringent stopping rule
