@@ -1,4 +1,3 @@
-#'
 #' Select the maximum tolerated dose (MTD) for single agent trials
 #'
 #' Select the maximum tolerated dose (MTD) when the single-agent trial is completed
