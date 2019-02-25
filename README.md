@@ -41,24 +41,7 @@ n.earlystop, startdose, p.saf, p.tox, cutoff.eli, extrasafe, offset, ntrial, see
 #'               strict stopping rule. The default value \code{offset=0.05} generally works well.
 #' @param ntrial the total number of trials to be simulated.
 
-
-
-
-* ```target```: The target toxicity probability, e.g., ```target<-0.33```.
-* ```dlt```: A vector of length *n* that stores the toxicity outcome for each patient, where *n* is the total number of patients so far.
-* ```dose.level```: A vector of length *n* that stores the dose level assigned to each patient.
-* ```ndose```: Number of prespecified dose levels of the new drug.
-* ```epi```: A small positive value that defines the neighbourhood of the target toxicity probability.
-* ```a```: The feasibility bound for overdose control, as default, ```a<-0.35```. 
-* ```eta```: The dose-switching cutoff, as default, ```eta<-0.60```.
-* ```lambda```: The dose-elimination cutoff, as default, ```lambda<-0.85```.
-* ```enter.time```: A vector of length *n* that stores the day of arrival of each patient under late-onset cases.
-* ```dlt.time```: A vector of length *n* that stores the time-to-toxicity outcome of each patient; If the subject has not experienced the DLT by the decision-making time, his time-to-toxcity outcome is *0*.
-* ```current.time```: The arrival time of the new patient, or the decision-making time to decide the next dose level.
-* ```tau```: The length of follow-up period.
-
-
-#Example
+# Example
 We apply the NOC and fNOC designs to the sonidegib trial.
 * Based on the accumulated data, two DLTs were observed at dose level 3 when patient 13 arrived on day 130. At this moment, patients 6, 8, 9, 11, and 12 were still under the follow-up of evaluation without experiencing any DLT, which led to a total of five missing toxicity outcomes. We utilize the following code to decide the dose level for patient 13.
 ```rscript
@@ -73,25 +56,46 @@ get.next.fnoc(target, enter.time, dlt.time, current.time,tau, dose.level, ndose)
 ```
 The output is given by 
 ```rscript
-The feasibility bound for overdose control rule is 0.35 
-The dose-switching cutoff is 0.6 
-The dose-elimination cutoff is 0.85 
-The posterior model probabilities are 0.02 0.16 0.55 0.2 0.07 
-The posterior probability that the current dose level is overly toxic is 0.4749329 
-The next dose level is 2 
-      Patient No. Dose level Day of arrival Observed DLT Time to DLT Fractional DLT
- [1,]           1          1              4            0          91      0.0000000
- [2,]           2          1              7            0          91      0.0000000
- [3,]           3          1             19            0          91      0.0000000
- [4,]           4          2             29            0          91      0.0000000
- [5,]           5          2             31            0          91      0.0000000
- [6,]           6          2             50            0          91      0.0000000
- [7,]           7          3             58            1          65      1.0000000
- [8,]           8          3             67            0          91      0.1428571
- [9,]           9          3             78            0          91      0.1428571
-[10,]          10          3             91            1          29      1.0000000
-[11,]          11          3            100            0          91      0.1428571
-[12,]          12          3            118            0          91      0.2207792
+$boundary_tab
+   #Patients #DLTs observed #Pending patients Ecalation      Stay               De-escalation          
+1  3         0              < 2               Yes            No                 No                     
+2  3         0              > 1               Suspend        Suspend            Suspend                
+3  3         1              0                 No             Yes                No                     
+4  3         1              1 ~ 2             No             ESS>= 2.88         ESS< 2.88              
+5  3         2              < 2               No             No                 Yes                    
+6  3         3              0                 No             No                 Yes & Eliminate        
+7  6         0              < 7               Yes            No                 No                     
+8  6         1              < 2               Yes            No                 No                     
+9  6         1              2 ~ 3             ESS> 4.07      ESS<= 4.07         No                     
+10 6         1              4 ~ 5             ESS> 4.07      ESS in [2.88,4.07] ESS< 2.88              
+11 6         2              0                 No             Yes                No                     
+12 6         2              1 ~ 4             No             ESS>= 5.75         ESS< 5.75              
+13 6         3              < 4               No             No                 Yes                    
+14 6         > 3            < 3               No             No                 Yes & Eliminate        
+15 9         0              < 10              Yes            No                 No                     
+16 9         1              < 5               Yes            No                 No                     
+17 9         1              5 ~ 6             ESS> 4.07      ESS<= 4.07         No                     
+18 9         1              7 ~ 8             ESS> 4.07      ESS in [2.88,4.07] ESS< 2.88              
+19 9         2              0                 Yes            No                 No                     
+20 9         2              1 ~ 3             ESS> 8.15      ESS<= 8.15         No                     
+21 9         2              4 ~ 7             ESS> 8.15      ESS in [5.75,8.15] ESS< 5.75              
+22 9         3              0                 No             Yes                No                     
+23 9         3              1 ~ 6             No             ESS>= 8.63         ESS< 8.63              
+24 9         4              < 6               No             No                 Yes                    
+25 9         > 4            < 5               No             No                 Yes & Eliminate        
+26 12        0              < 13              Yes            No                 No                     
+27 12        1              < 8               Yes            No                 No                     
+28 12        1              8 ~ 9             ESS> 4.07      ESS<= 4.07         No                     
+29 12        1              10 ~ 11           ESS> 4.07      ESS in [2.88,4.07] ESS< 2.88              
+30 12        2              < 4               Yes            No                 No                     
+31 12        2              4 ~ 6             ESS> 8.15      ESS<= 8.15         No                     
+32 12        2              7 ~ 10            ESS> 8.15      ESS in [5.75,8.15] ESS< 5.75              
+33 12        3              < 4               No             Yes                No                     
+34 12        3              4 ~ 9             No             ESS>= 8.63         ESS< 8.63              
+35 12        4              0                 No             Yes                No                     
+36 12        4              1 ~ 8             No             ESS>= 11.5         ESS< 11.5              
+37 12        5, 6           < 8               No             No                 Yes                    
+38 12        > 6            < 6               No             No                 Yes & Eliminate   
 ```
 * On the other hand, if we had treated these missing data as no DLTs, we can utilize the ```get.next.noc``` function to generate the next dose level, as given by
 ```rscript 
